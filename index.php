@@ -15,11 +15,11 @@ function getDaysDifference(string $date1, string $date2): int {
 function isValidDate(string $date): bool {
     /*TODO: This should be a regex, but I'm not expert on regex. 
       I'm sure all of us can search how to do it in ChatGPT so i will try a workaround */
-    return strlen($date) == 10 && $date[2] == "/" && $date[5] == "/" && isValidDateFormat($date);
+    return strlen($date) == 10 && $date[2] == "-" && $date[5] == "-" && isValidDateFormat($date);
 }
 
 function isValidDateFormat(string $date): bool {
-    $date_parts = explode("/",$date);
+    $date_parts = explode("-",$date);
     return isRightDayRange(intval($date_parts[0])) && 
             isRightMonthRange(intval($date_parts[1])) &&
             intval($date_parts[2] > 0);
@@ -35,6 +35,9 @@ function isRightMonthRange(int $month): bool {
 
 $date1 = readline("Enter 1 date(dd/mm/yyyy)");
 $date2 = readline("Another one!(dd/mm/yyyy)");
+//Thank you, picky exercise statement!
+$date1 = str_replace("/","-",$date1);
+$date2 = str_replace("/","-",$date2);
 
 if(isValidDate($date1) && isValidDate($date2)) {
     echo "Entre ".$date1." i ".$date2." hi ha ".getDaysDifference($date1,$date2)." dia(es) de diferència";
